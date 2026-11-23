@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-PORT="${PORT:-80}"
+PORT="${PORT:-8080}"
 
-# Configure Apache to listen on Render's dynamic $PORT
+# Configure Apache to listen on Railway's dynamic $PORT
 sed -i -E "s/^Listen [0-9]+/Listen ${PORT}/" /etc/apache2/ports.conf
 sed -i -E "s/<VirtualHost \*:[0-9]+>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
 
