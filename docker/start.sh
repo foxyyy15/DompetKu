@@ -3,10 +3,6 @@ set -e
 
 PORT="${PORT:-8080}"
 
-# Configure Apache to listen on Railway's dynamic $PORT
-sed -i -E "s/^Listen [0-9]+/Listen ${PORT}/" /etc/apache2/ports.conf
-sed -i -E "s/<VirtualHost \*:[0-9]+>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
-
 # Cache Laravel config, routes, and views
 php artisan config:cache
 php artisan route:cache
@@ -15,5 +11,5 @@ php artisan view:cache
 # Run database migrations automatically on deploy
 php artisan migrate --force
 
-# Start Apache in the foreground
-exec apache2-foreground
+# Start Laravel server bound to Railway's $PORT
+exec env PHP_CLI_SERVER_WORKERS=4 php artisan serve --host=0.0.0.0 --port="${PORT}"
