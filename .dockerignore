@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+node_modules
+vendor
+public/build
+public/hot
+storage/logs/*
+tests
+.DS_Store
+.claude
+.vscode
+.idea
